@@ -45,7 +45,19 @@ function PageSlider(container) {
         page.attr("class", "page " + from);
 
         currentPage.one('webkitTransitionEnd', function(e) {
-            $(e.target).remove();
+            var mt = $(e.target);
+            // If the user presses back while the animation is in progress, this prevents it from breaking since the app changes classes before 'webkitTransitionEnd'
+            if (!(mt.hasClass("center"))){
+                mt.remove();
+            };
+        });
+        
+        currentPage.one('webkitAnimationEnd', function(e) {
+            var mt = $(e.target);
+            // If the user presses back while the animation is in progress, this prevents it from breaking since the app changes classes before 'webkitTransitionEnd'
+            if (!(mt.hasClass("center"))){
+                mt.remove();
+            };
         });
 
         // Force reflow. More information here: http://www.phpied.com/rendering-repaint-reflowrelayout-restyle/
